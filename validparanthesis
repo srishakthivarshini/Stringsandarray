@@ -1,0 +1,36 @@
+import java.util.Stack;
+
+public class Main {
+    public static boolean isValidParenthesis(String inp) {
+        Stack<Character> st = new Stack<>();
+        int n = inp.length(); 
+        boolean flag = false;
+        for (int i = 0; i < n; i++) {
+            if (inp.charAt(i) == '(' || inp.charAt(i) == '{' || inp.charAt(i) == '[') {
+                st.push(inp.charAt(i));
+            } else {
+                if (st.isEmpty()) {
+                    return false; // If stack is empty and we encounter a closing parenthesis, it's not valid
+                }
+                char ch = st.pop();
+                if ((ch == '(' && inp.charAt(i) == ')') || (ch == '[' && inp.charAt(i) == ']')
+                        || (ch == '{' && inp.charAt(i) == '}')) {
+                    flag = true;
+                } else {
+                    return false; 
+                }
+            }
+        }
+        return st.isEmpty() && flag; 
+    }
+
+    public static void main(String[] args) {
+        String str = "{[()]}";
+        boolean result = isValidParenthesis(str);
+        if (result) {
+            System.out.print("Valid parentheses");
+        } else {
+            System.out.print("Not a Valid parentheses");
+        }
+    }
+}
